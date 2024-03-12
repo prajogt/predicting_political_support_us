@@ -23,7 +23,7 @@ bibliography: references.bib
 #### Workspace setup ####
 library(knitr)
 library(tidyverse)
-
+library(modelsummary)
 ```
 
 
