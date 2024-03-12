@@ -118,7 +118,7 @@ cleaned_ces2022 <-
       religpew == 5 ~ "Jewish",
       religpew == 6 ~ "Other",
       religpew == 7 ~ "Other",
-      religpew == 8 ~ "Hindu",
+      religpew == 8 ~ "Other",
       religpew == 9 ~ "Atheist",
       religpew == 10 ~ "Agnostic",
       religpew == 11 ~ "None",
@@ -126,12 +126,12 @@ cleaned_ces2022 <-
     )
     # gunown and edloan to be dealt with
   ) |>
-  select(voted_for, age_group, education, race, religion, gunown, edloan)
+  select(voted_for, age_group, gender, education, race, religion, gunown, edloan)
 
 # Exlcude gunown and edloan
 cleaned_ces2022_1 <-
   cleaned_ces2022 |>
-  select(voted_for, age_group, education, race, religion)
+  select(voted_for, age_group, gender, education, race, religion)
 
 write_csv(cleaned_ces2022_1, "output/data/cleaned_ces2022_1.csv")
 
