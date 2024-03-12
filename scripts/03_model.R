@@ -26,7 +26,7 @@ ces2022_1_reduced <-
   ces2022_1 |>
   slice_sample(n = 1000) |>
   mutate(
-    voted_for = as_factor(voted_for)
+    voted_for = if_else(voted_for == "Biden", 1, 0)
   )
 
 ces2022_2_reduced <-
@@ -35,23 +35,12 @@ ces2022_2_reduced <-
   mutate(
     voted_for = as_factor(voted_for)
   )
-
-ces2022_gender_reduced <-
-  ces2022_1 |>
-  filter(
-    gender != "Other",
-    race != "Other"
-  ) |>
-  mutate(
-    voted_for = if_else(voted_for == "Biden", 0, 1)
-  ) |>
-  slice_sample(n = 1000)
   
 # Model
 political_preferences_gender_race <-
   stan_glm(
     voted_for ~ gender + race,
-    data = ces2022_gender_reduced,
+    data = ces2022_1_reduced,
     family = binomial(link = "logit"),
     prior = normal(location = 0, scale = 2.5, autoscale = TRUE),
     prior_intercept = 

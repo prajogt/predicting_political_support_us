@@ -18,8 +18,12 @@ bibliography: references.bib
 #| include: false
 #| warning: false
 #| message: false
+#| echo: false
 
+#### Workspace setup ####
+library(knitr)
 library(tidyverse)
+
 ```
 
 
@@ -31,8 +35,34 @@ needs measurement
 
 # Model
 
-# Results
+```{r}
 
-# Discussion
 
-# Appendix
+cm <- c('raceWhite' = 'White',
+        'raceNative American' = 'Native American', 
+        'raceMultiracial' = 'Multiracial',
+        'raceMiddle Eastern' = 'Middle Eastern',
+        'raceHispanic' = 'Hispanic',
+        'raceBlack' = 'Black',
+        'genderMale' = 'Male')
+
+modelsummary(
+  list(
+    "Support Biden" = political_preferences_gender_race
+  ),
+  statistic = "mad"
+  )
+
+modelplot(political_preferences_gender_race, conf_level = 0.9, coef_map = cm) + labs(x = "90 per cent credibility interval")
+```
+
+
+## Results
+
+## Discussion
+
+## Conclusion
+
+## Appendix
+
+## References
