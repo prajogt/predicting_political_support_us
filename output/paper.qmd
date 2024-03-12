@@ -1,6 +1,6 @@
 ---
 title: "Predicting Political Support in the United States"
-# subtitle: "My subtitle if needed"
+subtitle: "The Effects of Culture and Key Political Choices"
 author: 
   - Janssen Myer Rambaud
   - Timothius Prajogi
@@ -33,36 +33,123 @@ include Estimand in here
 # Data
 needs measurement
 
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+#| echo: false
+
+# Load in data
+ces2022_1 <- read_csv("data/cleaned_ces2022_1.csv")
+ces2022_2 <- read_csv("data/cleaned_ces2022_2.csv")
+```
+
+
+```{r}
+ces2022_1 |>
+  ggplot(aes(x = education, fill = voted_for)) +
+  stat_count(position = "dodge") +
+  facet_wrap(facets = vars(gender)) +
+  theme_minimal() +
+  labs(
+    x = "Highest education",
+    y = "Number of respondents",
+    fill = "Voted for"
+  ) +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "bottom")
+
+```
+
+
 # Model
 
 ```{r}
+# Load in models
+political_preferences_cultural <-
+  readRDS(file = "models/political_preferences_cultural.rds")
+
+political_preferences_race <-
+  readRDS(file = "models/political_preferences_race.rds")
+
+political_preferences_importances <-
+  readRDS(file = "models/political_preferences_importances.rds")
+```
 
 
-cm <- c('raceWhite' = 'White',
-        'raceNative American' = 'Native American', 
-        'raceMultiracial' = 'Multiracial',
-        'raceMiddle Eastern' = 'Middle Eastern',
-        'raceHispanic' = 'Hispanic',
-        'raceBlack' = 'Black',
-        'genderMale' = 'Male')
+```{r}
+#| eval: true
+#| fig-cap: "Logistic regression probability results with Gender, Age, Race, and Religion as Predictors"
+#| include: true
+#| label: fig-modelcultural
+#| message: false
+#| warning: false
 
 modelsummary(
   list(
-    "Support Biden" = political_preferences_gender_race
+    "Support Biden" = political_preferences_cultural
   ),
   statistic = "mad"
   )
 
-modelplot(political_preferences_gender_race, conf_level = 0.9, coef_map = cm) + labs(x = "90 per cent credibility interval")
 ```
+
+```{r}
+modelsummary(
+  list(
+    "Support Biden" = political_preferences_importances
+  ),
+  statistic = "mad"
+  )
+
+```
+
 
 
 ## Results
 
 ## Discussion
 
-## Conclusion
+Although there seems to be a strong correlation between if a voter
+identifies as an other gender to supporting Biden, and a strong correlation
+between if a voter identifies as an other race to supporting Biden,
+but these must be considered carefully as within the sample (with seed 302), 
+only 5 and 1 voters identified in those categories respectively. To get a more
+accurate reading in regards to these features, it would be necessary to train
+a model which includes much more of these demographics.
 
 ## Appendix
+
+```{r}
+cm <- c('genderMale' = 'Male',
+        'raceWhite' = 'White',
+        'raceNative American' = 'Native American', 
+        'raceMultiracial' = 'Multiracial',
+        'raceMiddle Eastern' = 'Middle Eastern',
+        'raceHispanic' = 'Hispanic',
+        'raceBlack' = 'Black',
+        'raceAsian' = 'Asian',
+        'religionNone' = 'Non-Religious',
+        'religionProtestant' = 'Protestant',
+        'religionAgnostic' = 'Agnostic',
+        'religionAtheist' = 'Atheist',
+        'religionRoman Catholic' = 'Roman Catholic',
+        'religionJewish' = 'Jewish',
+        'religionOther' = 'Other'
+        )
+
+modelplot(political_preferences_gender_race_religion, conf_level = 0.9, coef_map = cm) +
+  labs(x = "90 per cent credibility interval")
+```
+
+```{r}
+modelplot(political_preferences_gender_race_religion, 
+          conf_level = 0.9, 
+          coef_map = c("raceOther" = "Other Race", "genderOther" = "Other Gender (Does not Identify as Male or Female)")) + 
+  labs(x = "90 per cent credibility interval")
+```
+
+
 
 ## References
