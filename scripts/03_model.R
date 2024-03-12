@@ -64,5 +64,8 @@ saveRDS(
 #    fill = "Voted for"
 #  ) +
 #  coord_flip() +
-#  scale_fill_brewer(palette = "Set1") +
+#  scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
 #  theme(legend.position = "bottom")
+
+#ggsave('output/images/gender_education_results.jpg')
+
