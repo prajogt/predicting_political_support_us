@@ -31,6 +31,18 @@ library(modelsummary)
 include Estimand in here
 
 # Data
+
+These delay statistics were downloaded, cleaned, parsed, analyzed, and visualized using R [@citeR], a statistical programming language, with package support from `tidyverse` [@citetidyverse], a collection of libraries which included the following packages that were utilized: 
+
+* `ggplot2` [@citeggplot] 
+* `dplyr` [@citedplyr] 
+* `readr` [@citereadr] 
+* `tibble` [@citetibble]
+
+The data was retrieved from Harvard's CCES Dataverse database, using the `dataverse` [@citedataverse] package.
+
+In this report we consider data collected from the 2022 CES survey, stored by Dataverse as ***Cooperative Election Study Common Content*** [@citecesdata].
+
 needs measurement
 
 ```{r}
@@ -139,17 +151,16 @@ cm <- c('genderMale' = 'Male',
         'religionOther' = 'Other'
         )
 
-modelplot(political_preferences_gender_race_religion, conf_level = 0.9, coef_map = cm) +
+modelplot(political_preferences_cultural, conf_level = 0.9, coef_map = cm) +
   labs(x = "90 per cent credibility interval")
 ```
 
 ```{r}
-modelplot(political_preferences_gender_race_religion, 
+modelplot(political_preferences_cultural, 
           conf_level = 0.9, 
           coef_map = c("raceOther" = "Other Race", "genderOther" = "Other Gender (Does not Identify as Male or Female)")) + 
   labs(x = "90 per cent credibility interval")
 ```
-
 
 
 ## References
