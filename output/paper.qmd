@@ -1,0 +1,38 @@
+---
+title: "Predicting Political Support in the United States"
+# subtitle: "My subtitle if needed"
+author: 
+  - Janssen Myer Rambaud
+  - Timothius Prajogi
+thanks: "Code and data are available at: https://github.com/prajogt/predicting_political_support_us.git ."
+date: today
+date-format: long
+abstract: "Using data gathered from the 2022 Cooperative Election Study (CES), we navigate through the various possible factors that influence a US citizen's voting decision. By examining a representative sample of 60 000 Americans, we can discern patterns in beliefs and personal backgrounds—ranging from gun control and student loan stances to race, religion, and educational background. This paper discusses the impact these individual factors may have towards predicting a voter's alignment, as well as how multiple factors can coalign to portray a more substantial impact. We aim to highlight these correlations and their potential implications with future elections."
+format: pdf
+toc: true
+number-sections: true
+bibliography: references.bib
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+```
+
+
+# Introduction
+include Estimand in here
+
+# Data
+needs measurement
+
+# Model
+
+# Results
+
+# Discussion
+
+# Appendix

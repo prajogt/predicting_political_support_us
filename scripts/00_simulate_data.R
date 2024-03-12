@@ -1,8 +1,8 @@
 #### Preamble ####
-# Purpose: Simulates data for survey results regarding financial attitudes
+# Purpose: Simulates data for predicting US political support based on demographic and socio-economic factors
 # Author: Janssen Myer Rambaud & Timothius Prajogi
 # Data: March 11 2024
-# Contact: janssen.rambaud@mail.utoronto.ca timothius.prajogi@mail.utoronto.ca
+# Contact: janssen.rambaud@mail.utoronto.ca, timothius.prajogi@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: None
 # Assumptions:
@@ -19,7 +19,7 @@ num_obs <- 1000
 # this is % of electorate to calculate the eligible voters (RIGHT SIDE OF COLUMN CES2022 PG 24-25)
 us_political_preferences <- tibble(
   registered_to_vote = sample(c("Yes", "No", "Don't know"), size = num_obs, replace = TRUE, prob = c(0.932, 0.062, 0.006)),
-  birth_year = sample(1940:2006, size = num_obs, replace = TRUE),
+  birth_year = sample(1940:2004, size = num_obs, replace = TRUE),
   gender = sample(c(0, 1), size = num_obs, replace = TRUE, prob = c(0.48, 0.52)),
   education = sample(c(0, 1, 2, 3), size = num_obs, replace = TRUE, prob = c(0.29, 0.29, 0.26, 0.16)),
   race = sample(c(0, 1, 2, 3, 4), size = num_obs, replace = TRUE, prob = c(0.75, 0.09, 0.09, 0.04, 0.02)),
@@ -98,3 +98,33 @@ us_political_preferences <- tibble(
   ) |>
   select(registered_to_vote, birth_year, age_group, gender, education, race, religion, gun_ownership, education_loans, supports_biden)
 
+
+#### Testing the data ####
+
+# Test registered_to_vote
+table(us_political_preferences$registered_to_vote %in% c("Yes", "No", "Don't know"))
+
+# Test birth_year
+min(us_political_preferences$birth_year) == 1940
+max(us_political_preferences$birth_year) == 2004
+
+# Test gender
+table(us_political_preferences$gender %in% c("Male", "Female"))
+
+# Test education
+table(us_political_preferences$education %in% c("High school or less", "Some college", "College", "Post-grad"))
+
+# Test race
+table(us_political_preferences$race %in% c("White", "Black", "Hispanic", "Asian", "Other"))
+
+# Test religion
+table(us_political_preferences$religion %in% c("Protestant/other Christian", "Catholic", "Jewish", "Something else", "None"))
+
+# Test gun_ownership
+table(us_political_preferences$gun_ownership %in% c("Personally own a gun", "Don't personally own a gun, but someone in the household owns a gun", "No one in the household owns a gun", "Not sure"))
+
+# Test education_loans
+table(us_political_preferences$education_loans %in% c("Yes", "No"))
+
+# Test supports_biden
+table(us_political_preferences$supports_biden %in% c("yes", "no"))
