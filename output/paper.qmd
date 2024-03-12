@@ -12,6 +12,7 @@ format: pdf
 toc: true
 number-sections: true
 bibliography: references.bib
+editor: visual
 ---
 
 ```{r}
@@ -24,6 +25,8 @@ bibliography: references.bib
 library(knitr)
 library(tidyverse)
 library(modelsummary)
+library(rstanarm)
+
 ```
 
 
@@ -41,9 +44,9 @@ These delay statistics were downloaded, cleaned, parsed, analyzed, and visualize
 
 The data was retrieved from Harvard's CCES Dataverse database, using the `dataverse` [@citedataverse] package.
 
-In this report we consider data collected from the 2022 CES survey, stored by Dataverse as ***Cooperative Election Study Common Content*** [@citecesdata].
+In this report we consider data collected from the 2022 CES survey, stored by Dataverse as *Cooperative Election Study Common Content* [@citecesdata].
 
-needs measurement
+needs measurement here
 
 ```{r}
 #| include: false
@@ -77,6 +80,10 @@ ces2022_1 |>
 
 # Model
 
+To create the generalized linear model we made use of the `rstanarm` [@citerstanarm] package.
+
+In particular the models we had created are logistic regression, all prediciting who the participant voted for during the 2020 US Presidential Election.
+
 ```{r}
 # Load in models
 political_preferences_cultural <-
@@ -90,13 +97,31 @@ political_preferences_importances <-
 ```
 
 
+The first model that was created was intended to discover whether we can forecast who a respondent was likely to vote for, knowing their cultural background, including their age, gender, race, and religion.
+
+We expect that due to various differences in experiences due to this background, whether it be because of a generational difference, a difference in culture between countries, or a difference in beliefs in religions, a voter who identifies in those demographics would vote differently, voting for the candidate who most undestands their experiences.
+
+The second model only forecasts who the respondent was likely to vote for based on race, to extract how much of the intercept in the previous model can be explained by a different in race.
+
+Finally, the last model aims to forecast a respondents vote knowing their prominent political ideals including education, gun ownership status, and student loan status. These are common political standpoints in the U.S.. Gun policy and student loan forgiveness is often a key political issue that separates the candidates. For the 2020 election, the candidates we are predicting for, Joe Biden and Donald Trump had opposing positions on student loan forgiveness. Whilst Trump was opposed to student loan forgiveness, backing incone-based repayment plans instead [@citetrumploanstance], Biden proposed to forgive a large amount of undergraduate tuition-related student debt [@citeballotpedia]. They also opposed each other on gun laws, with Trump advocating for the right to bear arms and Biden advocating gun safety policies aimed at holding manufacturers accountable [@citeballotpedia]. 
+
+As such, we expect that there would be a strong correlation with the respondents gun ownership and student loan status to the candidate they supported in the 2020 election.
+
+TODO add to refs
+
+https://www.washingtonpost.com/politics/interactive/2023/presidential-candidates-2024-policies-issues/donald-trump-student-loans-education/
+
+https://ballotpedia.org/2020_presidential_candidates_on_student_loan_debt
+https://www.rand.org/research/gun-policy/key-findings/gun-policy-in-america.html
+
+
+
 ```{r}
-#| eval: true
-#| fig-cap: "Logistic regression probability results with Gender, Age, Race, and Religion as Predictors"
-#| include: true
-#| label: fig-modelcultural
+#| label: tbl-modelsummarycultural
+#| tbl-cap: "Explaining whether a voter supported Biden or Trump in 2020 given their gender, age, race, and religion"
 #| message: false
 #| warning: false
+#| echo: false
 
 modelsummary(
   list(
@@ -163,4 +188,6 @@ modelplot(political_preferences_cultural,
 ```
 
 
+
+\newpage
 ## References
