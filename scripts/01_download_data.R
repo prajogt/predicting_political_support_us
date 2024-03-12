@@ -20,8 +20,7 @@ ces2022 <-
     server = "dataverse.harvard.edu",
     .f = read_csv
   ) |>
-  select(votereg, presvote20post, birthyr, gender4, educ, race, urbancity, religpew, gunown, edloan)
-  # votereg       => If they are registered to vote 
+  select(presvote20post, birthyr, gender4, educ, race, urbancity, religpew, gunown, edloan)
   # presvote20post => Who they voted for for President during the 2020 lecture
   # birthyr       => Birth year
   # gender4       => Identified gender
