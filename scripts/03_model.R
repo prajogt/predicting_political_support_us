@@ -4,7 +4,7 @@
 # Date: 23 January 2024
 # Contact: tim.prajogi@mail.utoronto.ca
 # License: MIT
-# Prerequisites: 01_download_data
+# Prerequisites: 01_download_data, 02_clean_data
 
 #### Workplace setup ####
 
@@ -54,22 +54,6 @@ saveRDS(
   political_preferences_cultural,
   file = "output/models/political_preferences_cultural.rds"
 )
-
-#ces2022_1 |>
-#  ggplot(aes(x = education, fill = voted_for)) +
-#  stat_count(position = "dodge") +
-#  facet_wrap(facets = vars(gender)) +
-#  theme_minimal() +
-#  labs(
-#    x = "Highest education",
-#    y = "Number of respondents",
-#    fill = "Voted for"
-#  ) +
-#  coord_flip() +
-#  scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
-#  theme(legend.position = "bottom")
-
-#ggsave('output/images/gender_education_results.jpg')
 
 # Model with only race
 political_preferences_race <-
