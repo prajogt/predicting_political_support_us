@@ -70,7 +70,7 @@ cleaned_ces2022 <-
     age_group = case_when(
       age < 30 ~ "18-29",
       age >= 30 & age < 45 ~ "30-44",
-      age >= 45 & age < 65 ~ "45-65",
+      age >= 45 & age < 65 ~ "45-64",
       age >= 65 ~ "65+"
     ),
     gender = case_when(
