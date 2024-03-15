@@ -1,7 +1,17 @@
 # Predicting Political Support in the United States
 
 ## Overview
-Using a Generalized Linear Model (Logistic Regression), predict political support in the US using various parameters.
+This paper makes use of a Generalized Linear Model (Logistic Regression) to predict political support in the US using various parameters. The paper considers the two main political parties, the Democratic Party and the Republican Party, and their respective leaders, Joe Biden and Donald Trump. Using the 2022 CES survey data found at [Harvard 2022 CES](https://doi.org/10.7910/DVN/PR4L8P), the respondent data on: 
+- 2020 Election Vote,
+- Age Group,
+- Gender,
+- Education Completed,
+- Race,
+- Religion,
+- Gun Ownership,
+- Student Loan Status
+
+was used in the development of data figures and three models that aim to convey the correlations found in this data. With this, the paper aimed to highlight any noteworthy correlations that may be used to predict which party/presidential candidate a voter would support given the listed personal beliefs and stances above.
 
 ## File Structure
 - `inputs` contains the CES 2022 data, including their 2022 Guide .pdf. This is the raw dataset downloaded directly from the CES 2022 source.
