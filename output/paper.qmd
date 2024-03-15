@@ -12,7 +12,8 @@ format: pdf
 toc: true
 number-sections: true
 bibliography: references.bib
-editor: visual
+header-includes:
+  \usepackage{placeins}
 ---
 
 ```{r}
@@ -52,7 +53,7 @@ These delay statistics were downloaded, cleaned, parsed, analyzed, and visualize
 
 For additional assitance with report generation the `knitr` [@citeknitr] package was used.
 
-The data was retrieved from Harvard's CCES Dataverse database, using the `dataverse` [@citedataverse] package. In this report we consider data collected from the 2022 CES (Cooperative ELection Study) survey, a questionnaire administered by YouGov collecting information about respondent's demographic, background, beliefs, opinions, past ballots cast, and future vote intentions. This data is accessible through Dataverse as *Cooperative Election Study Common Content* [@citecesdata]. There was an option to use the 2020 CES dataset, but we opted to use the newer, 60000 observation, 2022 CES dataset for a more updated and accurate representation of the current political climate in the United States after two years of Joe Biden being in office. When the 2024 elections are held, we can see how the original previous aligning of the respondents have changed, if they have changed.
+The data was retrieved from Harvard's CCES Dataverse database, using the `dataverse` [@citedataverse] package. In this report we consider data collected from the 2022 CES (Cooperative Election Study) survey, a questionnaire administered by YouGov collecting information about respondent's demographic, background, beliefs, opinions, past ballots cast, and future vote intentions. This data is accessible through Dataverse as *Cooperative Election Study Common Content* [@citecesdata]. There was an option to use the 2020 CES dataset, but we opted to use the newer, 60000 observation, 2022 CES dataset for a more updated and accurate representation of the current political climate in the United States after two years of Joe Biden being in office. When the 2024 elections are held, we can see how the original previous aligning of the respondents have changed, if they have changed.
 
 
 ```{r}
@@ -60,7 +61,7 @@ The data was retrieved from Harvard's CCES Dataverse database, using the `datave
 #| message: false
 #| echo: false
 #| label: tbl-cesdata
-#| tbl-cap: "2022 CES "
+#| tbl-cap: "2022 CES (Cooperative Election Study) Data"
 
 # Load in data
 ces2022_1 <- read_csv("data/cleaned_ces2022_1.csv")
@@ -99,37 +100,47 @@ The reason that we chose a large amount of variables/factors for our paper is so
 
 
 ```{r}
+#| eval: true
 #| echo: false
 #| message: false
 #| warning: false
-#| label: tbl-
-#| tbl-cap: Sample of Subway Delay Statistics
+#| fig-cap: "Votes for Candidate given Age Group and Religion"
+#| label: fig-agevsreligion
 
 ces2022_1 |>
-  filter(gender != "Other", race %in%  c("Asian", "Black", "Hispanic")) |>
   ggplot(aes(x = religion, fill = voted_for)) +
   stat_count(position = "dodge") +
-  facet_wrap(facets = vars(race)) +
+  facet_wrap(facets = vars(age_group)) +
   theme_minimal() +
   labs(
-    x = "Race",
+    x = "Religion",
     y = "Number of respondents",
     fill = "Voted for"
   ) +
   coord_flip() +
   scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
   theme(legend.position = "bottom")
+
+
 ```
 
+
 ```{r}
-ces2022_1 |>
-  filter(race %in%  c("Asian", "Black", "Hispanic")) |>
-  ggplot(aes(x = religion, fill = voted_for)) +
+#| eval: true
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Votes for Candidate given Gun Ownership and Education"
+#| label: tbl-gunownvseducation
+
+
+ces2022_2 |>
+  ggplot(aes(x = household_gun_ownership, fill = voted_for)) +
   stat_count(position = "dodge") +
-  facet_wrap(facets = vars(race)) +
+  facet_wrap(facets = vars(education)) +
   theme_minimal() +
   labs(
-    x = "Race",
+    x = "Does someone in your household own a gun?",
     y = "Number of respondents",
     fill = "Voted for"
   ) +
@@ -137,20 +148,6 @@ ces2022_1 |>
   scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
   theme(legend.position = "bottom")
 
-ces2022_1 |>
-  filter(!(race %in%  c("Asian", "Black", "Hispanic"))) |>
-  ggplot(aes(x = religion, fill = voted_for)) +
-  stat_count(position = "dodge") +
-  facet_wrap(facets = vars(race)) +
-  theme_minimal() +
-  labs(
-    x = "Race",
-    y = "Number of respondents",
-    fill = "Voted for"
-  ) +
-  coord_flip() +
-  scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
-  theme(legend.position = "bottom")
 
 ```
 
@@ -162,33 +159,34 @@ To create the generalized linear model we made use of the `rstanarm` [@citerstan
 In particular the models we had created are logistic regression, all predicting who the participant voted for during the 2020 US Presidential Election.
 
 ```{r}
+#| include: false
+#| warning: false
+#| message: false
+#| echo: false
+
 # Load in models
 political_preferences_cultural <-
   readRDS(file = "models/political_preferences_cultural.rds")
 
-political_preferences_race <-
-  readRDS(file = "models/political_preferences_race.rds")
-
 political_preferences_importances <-
   readRDS(file = "models/political_preferences_importances.rds")
+
 ```
 
 
 The first model that was created was intended to discover whether we can forecast who a respondent was likely to vote for, knowing their cultural background, including their age, gender, race, and religion.
 
-We expect that due to various differences in experiences due to this background, whether it be because of a generational difference, a difference in culture between countries, or a difference in beliefs in religions, a voter who identifies in those demographics would vote differently, voting for the candidate who most undestands their experiences.
+We expect that due to various differences in experiences due to this background, whether it be because of a generational difference, a difference in culture between countries, or a difference in beliefs in religions, a voter who identifies in those demographics would vote differently, voting for the candidate who most understands their experiences.
 
-The second model only forecasts who the respondent was likely to vote for based on race, to extract how much of the intercept in the previous model can be explained by a different in race.
-
-Finally, the last model aims to forecast a respondents vote knowing their prominent political ideals including education, gun ownership status, and student loan status. These are common political standpoints in the U.S.. Gun policy and student loan forgiveness is often a key political issue that separates the candidates. For the 2020 election, the candidates we are predicting for, Joe Biden and Donald Trump had opposing positions on student loan forgiveness. Whilst Trump proposed grants that would help with future students, Biden proposed to forgive a large amount of undergraduate tuition-related student debt [@citeballotpedia]. In similar opposition, they held different opinions on gun laws, with Trump advocating for the right to bear arms and Biden advocating gun safety policies aimed at holding manufacturers accountable [@citeballotpedia]. 
+The second model aims to forecast a respondents vote knowing their prominent political ideals including education, gun ownership status, and student loan status. These are common political standpoints in the U.S.. Gun policy and student loan forgiveness is often a key political issue that separates the candidates. For the 2020 election, the candidates we are predicting for, Joe Biden and Donald Trump had opposing positions on student loan forgiveness. Whilst Trump proposed grants that would help with future students, Biden proposed to forgive a large amount of undergraduate tuition-related student debt [@citeballotpedia]. In similar opposition, they held different opinions on gun laws, with Trump advocating for the right to bear arms and Biden advocating gun safety policies aimed at holding manufacturers accountable [@citeballotpedia]. 
 
 As such, we expect that there would be a strong correlation with the respondents gun ownership and student loan status to the candidate they supported in the 2020 election.
 
 
 
 ```{r}
-#| label: tbl-modelsummarycultural
-#| tbl-cap: "Explaining whether a voter supported Biden or Trump in 2020 given their gender, age, race, and religion"
+#| label: fig-modelsummarycultural
+#| fig-cap: "Explaining whether a voter supported Biden or Trump in 2020 given their gender, age, race, and religion"
 #| message: false
 #| warning: false
 #| echo: false
@@ -227,8 +225,8 @@ modelsummary(
 ```
 
 ```{r}
-#| label: tbl-modelsummaryimportances
-#| tbl-cap: "Explaining whether a voter supported Biden or Trump in 2020 given their education, household gun ownership, and student load status."
+#| label: fig-modelsummaryimportances
+#| fig-cap: "Explaining whether a voter supported Biden or Trump in 2020 given their education, household gun ownership, and student load status."
 #| message: false
 #| warning: false
 #| echo: false
@@ -269,35 +267,42 @@ a model which includes much more of these demographics.
 ## Appendix
 
 ```{r}
-cm <- c('genderMale' = 'Male',
-        'raceWhite' = 'White',
-        'raceNative American' = 'Native American', 
-        'raceMultiracial' = 'Multiracial',
-        'raceMiddle Eastern' = 'Middle Eastern',
-        'raceHispanic' = 'Hispanic',
-        'raceBlack' = 'Black',
-        'raceAsian' = 'Asian',
-        'religionNone' = 'Non-Religious',
-        'religionProtestant' = 'Protestant',
-        'religionAgnostic' = 'Agnostic',
-        'religionAtheist' = 'Atheist',
-        'religionRoman Catholic' = 'Roman Catholic',
-        'religionJewish' = 'Jewish',
-        'religionOther' = 'Other'
-        )
+#| warning: false
+#| message: false
+#| echo: false
+#| label: tbl-conf_cultural
+#| tbl-cap: "Cultural Model 90% Confidence Intervals"
 
 modelplot(political_preferences_cultural, conf_level = 0.9, coef_map = cm) +
   labs(x = "90 per cent credibility interval")
+
 ```
 
 ```{r}
+#| warning: false
+#| message: false
+#| echo: false
+#| label: fig-confother
+#| fig-cap: "Cultural Model 90% Confidence Intervals (Race and Gender Other)"
+
 modelplot(political_preferences_cultural, 
           conf_level = 0.9, 
           coef_map = c("raceOther" = "Other Race", "genderOther" = "Other Gender (Does not Identify as Male or Female)")) + 
   labs(x = "90 per cent credibility interval")
+
+```
+
+```{r}
+#| warning: false
+#| message: false
+#| echo: false
+#| label: fig-confimportances
+#| fig-cap: "Key Topics Model 90% Confidence Intervals"
+
+modelplot(political_preferences_importances, conf_level = 0.9, coef_map = cmi) +
+  labs(x = "90 per cent credibility interval")
+
 ```
 
 
-
-\newpage
 ## References
