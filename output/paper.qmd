@@ -185,11 +185,11 @@ As such, we expect that there would be a strong correlation with the respondents
 
 
 ```{r}
-#| label: fig-modelsummarycultural
-#| fig-cap: "Explaining whether a voter supported Biden or Trump in 2020 given their gender, age, race, and religion"
 #| message: false
 #| warning: false
 #| echo: false
+#| label: tbl-modelsummarycultural
+#| tbl-cap: "Explaining whether a voter supported Biden or Trump in 2020 given their gender, age, race, and religion"
 
 # Rename coefficients
 cm <- c('genderMale' = 'Male',
@@ -224,12 +224,13 @@ modelsummary(
 
 ```
 
+
 ```{r}
-#| label: fig-modelsummaryimportances
-#| fig-cap: "Explaining whether a voter supported Biden or Trump in 2020 given their education, household gun ownership, and student load status."
 #| message: false
 #| warning: false
 #| echo: false
+#| label: tbl-modelsummaryimportances
+#| tbl-cap: "Explaining whether a voter supported Biden or Trump in 2020 given their education, household gun ownership, and student load status."
 
 cmi <- c('education4-year' = '4 year Education',
          'educationHigh school graduate' = 'High School',
