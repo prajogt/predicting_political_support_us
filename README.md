@@ -31,7 +31,7 @@ was used in the development of data figures and three models that aim to convey 
 
 ## Execution Instructions
 
-1. [OPTIONAL] Run `scripts/00_simulate_data.R` to see a simulation
+1. [OPTIONAL] Run `scripts/00_simulate_data.R` to see a simulation of our expected data and results.
 2. Run `scripts/01_download_data.R` to download the raw CES 2022 dataset.
 3. Run `scripts/02_download_data.R` to clean the CES 2022 dataset.
 4. Run `scripts/03_model.R` to create models to later analyze for correlations.
