@@ -32,5 +32,5 @@ ces2022 <-
   # edloan        => If they have education loans
 
 # Save to csv
-write_csv(ces2022, "input/ces2022.csv")
+write_csv(ces2022, "input/data/ces2022.csv")
 

@@ -15,7 +15,7 @@ library(tidyverse)
 # Read in data
 ces2022 <- 
   read_csv(
-    "input/ces2022.csv",
+    "input/data/ces2022.csv",
     col_types =
       cols(
         "presvote20post" = col_integer(),
@@ -145,9 +145,11 @@ write_csv(cleaned_ces2022_1, "output/data/cleaned_ces2022_1.csv")
 cleaned_ces2022_2 <-
   cleaned_ces2022 |>
   filter(
-    !is.na(gunown),
-    !is.na(edloan)
+    !is.na(gunown)
   ) |>
+  filter(
+    !is.na(edloan)
+  )|>
   mutate(
     household_gun_ownership = case_when(
       gunown == 1 ~ "Yes",
