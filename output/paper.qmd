@@ -33,14 +33,12 @@ library(rstanarm)
 
 # Introduction
 
-Voting for the leader of your country is one of the biggest decisions an American citizen can make. It decides many of the decisions that will be made throughout that four year term as well as how their life will change in that period of time. There may be changes that this elected government makes that they believe to be a great decision, but it may also be seen as terrible one in the eyes of others. This is why it is important to understand there are many factors that influence a voter's decision. They vote for the candidate who they believe will make the best decisions for them and their country. In this paper, we hope to show the impact of various factors on a voter's decision, and how these factors can be used to predict a voter's alignment. From personal stances and religious beliefs to political stances, or to biological factors, we hope to show how these factors can be used to predict a voter's alignment.
+  Voting for the leader of your country is one of the biggest decisions an American citizen can make. It decides many of the decisions that will be made throughout that four year term as well as how their life will change in that period of time. There may be changes that this elected government makes that they believe to be a great decision, but it may also be seen as terrible one in the eyes of others. This is why it is important to understand there are many factors that influence a voter's decision. They vote for the candidate who they believe will make the best decisions for them and their country. In this paper, we hope to show the impact of various factors on a voter's decision, and how these factors can be used to predict a voter's alignment. From personal stances and religious beliefs to political stances, or to biological factors, we hope to show how these factors can be used to predict a voter's alignment.
 
-The topic of concern is the 2020 United States presidential election held on November 3rd, 2020, where we saw Democratic Party leader Joe Biden win against incumbent president Donald Trump (Gambino 2020). Using the 2022 Cooperative Election Study (CES) survey data, we aim to predict who a voter supported in the 2020 election based on their cultural background, political stances, and other factors. We will be using a representative sample of 60000 Americans to discern patterns in these voters' responses  and how their personal backgrounds may have influenced their voting decision. We will be examining the impact of various factors such as: gender, race, educational background, religon, and personal stances on key political issues such as gun control and student loans. Our main focus is to compare the correlations in the 2022 CES survey data to the 2020 CES survey data, and to see if our estimand, the effect of a voter's cultural background and political stances on their voting decision, has influenced their voting decision in the 2020 election. Using these understandings, we hope to highlight the potential implications these correlations may have for this upcoming 2024 election.
+  The topic of concern is the 2020 United States presidential election held on November 3rd, 2020, where we saw Democratic Party leader Joe Biden win against incumbent president Donald Trump (Gambino 2020). Using the 2022 Cooperative Election Study (CES) survey data, we aim to predict who a voter supported in the 2020 election based on their cultural background, political stances, and other factors. We will be using a representative sample of 60000 Americans to discern patterns in these voters' responses  and how their personal backgrounds may have influenced their voting decision. We will be examining the impact of various factors such as: gender, race, educational background, religon, and personal stances on key political issues such as gun control and student loans. Our main focus is to compare the correlations in the 2022 CES survey data to the 2020 CES survey data, and to see if our estimand, the effect of a voter's cultural background and political stances on their voting decision, has influenced their voting decision in the 2020 election. Using these understandings, we hope to highlight the potential implications these correlations may have for this upcoming 2024 election.
 
-With this context and information in mind, we developed this paper to be structured as follows. We will first present the data and the models we used to analyze the data. We will then present the results of our analysis, and discuss the implications of these results. Finally, we will conclude with a summary of our findings and the potential implications of these findings for the upcoming 2024 election. To go in more detail, after downloading and cleaning the 2022 CES survey data, we used the `rstanarm` [@citerstanarm] package to create a generalized linear model to predict who a voter supported in the 2020 election based on their cultural background, political stances, and other factors, as listed above. We then used the `modelsummary` [@citemodelsummary] package to summarize the results of our model. We found that there were strong correlations, with a strong example of this being the voter's personal stances on student loan forgiveness and gun ownership. With the two main parties, Democrats and Republicans, having opposing stances on these issues, we found that there was a strong correlation between these stances and who a voter supported. As Biden was in favour of student loan forgiveness, but opposed to gun ownership, while Trump was opposed to student loan forgiveness, but in favour of gun ownership, we discovered a correlation between a voter's ties to these stances because they directly oppose each other. This is just one example of the many correlations we found, and we will discuss these in more detail in the results section. These findings are important because it shows how a leading presidential party's stance on a certain topic has the potential to sway a voter's decision in the event that they align with that stance. This is important because it shows how a leading presidential party's stance on a certain topic has the chance to adjust and adapt to certain factors to possibly sway some more votes in their favour. We will also discuss the implications of these findings, and how they may be used to predict a voter's alignment in the upcoming 2024 election.
+  With this context and information in mind, we developed this paper to be structured as follows. We will first present the data and the models we used to analyze the data. We will then present the results of our analysis, and discuss the implications of these results. Finally, we will conclude with a summary of our findings and the potential implications of these findings for the upcoming 2024 election. To go in more detail, after downloading and cleaning the 2022 CES survey data, we used the `rstanarm` [@citerstanarm] package to create a generalized linear model to predict who a voter supported in the 2020 election based on their cultural background, political stances, and other factors, as listed above. We then used the `modelsummary` [@citemodelsummary] package to summarize the results of our model. We found that there were strong correlations, with a strong example of this being the voter's personal stances on student loan forgiveness and gun ownership. With the two main parties, Democrats and Republicans, having opposing stances on these issues, we found that there was a strong correlation between these stances and who a voter supported. As Biden was in favour of student loan forgiveness, but opposed to gun ownership, while Trump was opposed to student loan forgiveness, but in favour of gun ownership, we discovered a correlation between a voter's ties to these stances because they directly oppose each other. This is just one example of the many correlations we found, and we will discuss these in more detail in the results section. These findings are important because it shows how a leading presidential party's stance on a certain topic has the potential to sway a voter's decision in the event that they align with that stance. This is important because it shows how a leading presidential party's stance on a certain topic has the chance to adjust and adapt to certain factors to possibly sway some more votes in their favour. We will also discuss the implications of these findings, and how they may be used to predict a voter's alignment in the upcoming 2024 election.
 
-
-TODO: cite https://www.theguardian.com/us-news/2020/nov/07/joe-biden-wins-us-election-donald-trump-loses-final-result-2020
 
 # Data
 
@@ -94,7 +92,7 @@ The variables we used in our analysis were:
 - `edloan`, renamed to `student_loan`,
   - This data was represented in the form of a numerical variable corresponding to whether the voter had student loans. This was cleaned to limit the options to "Yes", "No".
 
-The reason that we chose a large amount of variables/factors for our paper is so that we can get a bigger representation of the political climate. Should this be limited to a single model, then it may not reflect other correlations that may be present in the data. By using these variables, we take the most significant factors that may influence a voter's decision, and use them to predict who a voter supported in the 2020 election `voted_for`. It was important to get the voter's age, `age`, because it is important to understand the generational differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was clear that 'Female' respondents were in more support towards the Democrats at 52% as opposed to 43% for 'Males'. In our given age buckets, it was discovered that 65% of 18-29 year olds supported the Democrats, whereas only 40% of 65+ year olds supported the Democrats, however, 18-29 year olds only made up 12% of the sample, whereas 65+ year olds made up 30% of the sample. It was also important to get the voter's gender, `gender`, and race, `race`, because it is important to understand the biological differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was discovered that 84% and 71% of Black and Asian respondents, respectively, supported the Democrats, whereas only 41% of White respondents supported the Democrats. Incorporating the voter's religion, `religion`, was important because it is important to understand that religious beliefs and differences can have a strong influence on a person's personal beliefs and therefore impact their personal stances on topics such as gun ownership. To put a contrasting example out there, 30% of Protestant/Christian respondents support the Democrats as opposed to a whopping 72% by Atheists. This could be attributed to certain parties aligning more to certain religious beliefs. A voter's education, `education`, was important because there may be certain understandings they arrive at during the completion of their education. Perhaps they viewed the world in one way at first, but after becoming more 'educated' in a topic, feel they have a better understanding of the world and therefore have a different stance on certain topics. This goes hand in hand with the voter's stance on student loans, `student_loan`, as it is important to understand how a voter's personal experiences with student loans may influence their voting decision. There was a time of serious consideration during Biden's tenure where he was considering forgiving student loans, and this intent alone may have swayed some support in his favour.
+  The reason that we chose a large amount of variables/factors for our paper is so that we can get a bigger representation of the political climate. Should this be limited to a single model, then it may not reflect other correlations that may be present in the data. By using these variables, we take the most significant factors that may influence a voter's decision, and use them to predict who a voter supported in the 2020 election `voted_for`. It was important to get the voter's age, `age`, because it is important to understand the generational differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was clear that 'Female' respondents were in more support towards the Democrats at 52% as opposed to 43% for 'Males'. In our given age buckets, it was discovered that 65% of 18-29 year olds supported the Democrats, whereas only 40% of 65+ year olds supported the Democrats, however, 18-29 year olds only made up 12% of the sample, whereas 65+ year olds made up 30% of the sample. It was also important to get the voter's gender, `gender`, and race, `race`, because it is important to understand the biological differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was discovered that 84% and 71% of Black and Asian respondents, respectively, supported the Democrats, whereas only 41% of White respondents supported the Democrats. Incorporating the voter's religion, `religion`, was important because it is important to understand that religious beliefs and differences can have a strong influence on a person's personal beliefs and therefore impact their personal stances on topics such as gun ownership. To put a contrasting example out there, 30% of Protestant/Christian respondents support the Democrats as opposed to a whopping 72% by Atheists. This could be attributed to certain parties aligning more to certain religious beliefs. A voter's education, `education`, was important because there may be certain understandings they arrive at during the completion of their education. Perhaps they viewed the world in one way at first, but after becoming more 'educated' in a topic, feel they have a better understanding of the world and therefore have a different stance on certain topics. This goes hand in hand with the voter's stance on student loans, `student_loan`, as it is important to understand how a voter's personal experiences with student loans may influence their voting decision. There was a time of serious consideration during Biden's tenure where he was considering forgiving student loans, and this intent alone may have swayed some support in his favour.
 
 
 
@@ -131,7 +129,7 @@ ces2022_1 |>
 #| message: false
 #| warning: false
 #| fig-cap: "Votes for Candidate given Gun Ownership and Education"
-#| label: tbl-gunownvseducation
+#| label: fig-gunownvseducation
 
 
 ces2022_2 |>
@@ -253,9 +251,9 @@ modelsummary(
 
 
 
-## Results
+# Results
 
-## Discussion
+# Discussion
 
 Although there seems to be a strong correlation between if a voter
 identifies as an other gender to supporting Biden, and a strong correlation
@@ -265,14 +263,34 @@ only 5 and 1 voters identified in those categories respectively. To get a more
 accurate reading in regards to these features, it would be necessary to train
 a model which includes much more of these demographics.
 
-## Appendix
+# Appendix
 
 ```{r}
 #| warning: false
 #| message: false
 #| echo: false
-#| label: tbl-conf_cultural
-#| tbl-cap: "Cultural Model 90% Confidence Intervals"
+#| label: fig-conf_cultural
+#| fig-cap: "Cultural Model 90% Confidence Intervals"
+
+cm <- c('genderMale' = 'Male',
+        'raceWhite' = 'White',
+        'raceNative American' = 'Native American', 
+        'raceMultiracial' = 'Multiracial',
+        'raceMiddle Eastern' = 'Middle Eastern',
+        'raceHispanic' = 'Hispanic',
+        'raceBlack' = 'Black',
+        'raceAsian' = 'Asian',
+        'religionNone' = 'Non-Religious',
+        'religionProtestant' = 'Protestant',
+        'religionAgnostic' = 'Agnostic',
+        'religionAtheist' = 'Atheist',
+        'religionRoman Catholic' = 'Roman Catholic',
+        'religionJewish' = 'Jewish',
+        'religionOther' = 'Other',
+        'age_group30-44' = 'Age (30-44)',
+        'age_group45-65' = 'Age (45-65)',
+        'age_group65+' = 'Age (65+)'
+        )
 
 modelplot(political_preferences_cultural, conf_level = 0.9, coef_map = cm) +
   labs(x = "90 per cent credibility interval")
@@ -288,7 +306,7 @@ modelplot(political_preferences_cultural, conf_level = 0.9, coef_map = cm) +
 
 modelplot(political_preferences_cultural, 
           conf_level = 0.9, 
-          coef_map = c("raceOther" = "Other Race", "genderOther" = "Other Gender (Does not Identify as Male or Female)")) + 
+          coef_map = c("raceOther" = "Other Race", "genderOther" = "Other Gender")) + 
   labs(x = "90 per cent credibility interval")
 
 ```
@@ -305,5 +323,5 @@ modelplot(political_preferences_importances, conf_level = 0.9, coef_map = cmi) +
 
 ```
 
-
-## References
+\newpage
+# References
