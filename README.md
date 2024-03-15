@@ -6,6 +6,8 @@ Using a Generalized Linear Model (Logistic Regression), predict political suppor
 ## File Structure
 - `inputs` contains the CES 2022 data, including their 2022 Guide .pdf. This is the raw dataset downloaded directly from the CES 2022 source.
 
+- `other/sketches` contains the sketches of the dataset and figure we want to represent in our paper.
+
 - `output/data` contains the cleaned CES 2022 data which is ready to be processed into the models.
 
 - `output/models` contains the three political preferences models chosen for the development of this paper, each grouped appropriately based on the CES 2022 data.
