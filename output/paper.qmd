@@ -50,9 +50,31 @@ These delay statistics were downloaded, cleaned, parsed, analyzed, and visualize
 * `readr` [@citereadr] 
 * `tibble` [@citetibble]
 
-The data was retrieved from Harvard's CCES Dataverse database, using the `dataverse` [@citedataverse] package. In this report we consider data collected from the 2022 CES survey, stored by Dataverse as *Cooperative Election Study Common Content* [@citecesdata]. There was an option to use the 2020 CES dataset, but we opted to use the newer, 60000 observation, 2022 CES dataset for a more updated and accurate representation of the current political climate in the United States after two years of Joe Biden being in office. 
+For additional assitance with report generation the `knitr` [@citeknitr] package was used.
 
-Possible put in appendix?
+The data was retrieved from Harvard's CCES Dataverse database, using the `dataverse` [@citedataverse] package. In this report we consider data collected from the 2022 CES (Cooperative ELection Study) survey, a questionnaire administered by YouGov collecting information about respondent's demographic, background, beliefs, opinions, past ballots cast, and future vote intentions. This data is accessible through Dataverse as *Cooperative Election Study Common Content* [@citecesdata]. There was an option to use the 2020 CES dataset, but we opted to use the newer, 60000 observation, 2022 CES dataset for a more updated and accurate representation of the current political climate in the United States after two years of Joe Biden being in office. When the 2024 elections are held, we can see how the original previous aligning of the respondents have changed, if they have changed.
+
+
+```{r}
+#| warning: false
+#| message: false
+#| echo: false
+#| label: tbl-cesdata
+#| tbl-cap: "2022 CES "
+
+# Load in data
+ces2022_1 <- read_csv("data/cleaned_ces2022_1.csv")
+ces2022_2 <- read_csv("data/cleaned_ces2022_2.csv")
+
+ces2022_2 |>
+  head() |>
+  kable(
+    col.names = c("Voted For (2020)", "Age Group", "Gender", "Education", "Race", "Religion", "Household Gun Ownership", "Student Loan Status"),
+    booktabs = TRUE
+  )
+```
+
+
 The variables we used in our analysis were: 
 - `presvote20post`, renamed to `voted_for`
   - This data was represented in the form of a numerical variable corresponding to the presidential candidate that voted for in the 2020 eleciton. This was cleaned to limit the options to either "Biden" or "Trump", the two leading candidates in the 2020 and 2024 election. 
@@ -71,30 +93,58 @@ The variables we used in our analysis were:
 - `edloan`, renamed to `student_loan`,
   - This data was represented in the form of a numerical variable corresponding to whether the voter had student loans. This was cleaned to limit the options to "Yes", "No".
 
-The reason that we chose a large amount of variables/factors for our paper is so that we can get a bigger representation of the political climate. Should this be limited to a single model, then it may not reflect other correlations that may be present in the data. By using these variables, we take the most significant factors that may influence a voter's decision, and use them to predict who a voter supported in the 2020 election `voted_for`. It was important to get the voter's age, `age`, because it is important to understand the generational differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was clear that 'Female' respondents were in more support towards the Democrats at 52% as opposed to 43% for 'Males'. In our given age buckets, it was discovered that 65% of 18-29 year olds supported the Democrats, whereas only 40% of 65+ year olds supported the Democrats, however, 18-29 year olds only made up 12% of the sample, whereas 65+ year olds made up 30% of the sample. It was also important to get the voter's gender, `gender`, and race, `race`, because it is important to understand the biological differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was discovered that 84% and 71% of Black and Asian respondents, respectively, supported the Democrats, whereas only 41% of White respondents supported the Democrats. Incoorporating the voter's religion, `religion`, was important because it is important to understand that religious beliefs and differences can have a strong influence on a person's personal beliefs and therefore impact their personal stances on topics such as gun ownership. To put a contrasting example out there, 30% of Protestant/Christian respondents support the Democrats as opposed to a whopping 72% by Atheists. This could be attributed to certain parties aligning more to certain religious beliefs. A voter's education, `education`, was important because there may be certain understandings they arrive at during the completion of their education. Perhaps they viewed the world in one way at first, but after becoming more 'educated' in a topic, feel they have a better understanding of the world and therefore have a different stance on certain topics. This goes hand in hand with the voter's stance on student loans, `student_loan`, as it is important to understand how a voter's personal experiences with student loans may influence their voting decision. There was a time of serious consideration during Biden's tenure where he was considering forgiving student loans, and this intent alone may have swayed some support in his favour.
+The reason that we chose a large amount of variables/factors for our paper is so that we can get a bigger representation of the political climate. Should this be limited to a single model, then it may not reflect other correlations that may be present in the data. By using these variables, we take the most significant factors that may influence a voter's decision, and use them to predict who a voter supported in the 2020 election `voted_for`. It was important to get the voter's age, `age`, because it is important to understand the generational differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was clear that 'Female' respondents were in more support towards the Democrats at 52% as opposed to 43% for 'Males'. In our given age buckets, it was discovered that 65% of 18-29 year olds supported the Democrats, whereas only 40% of 65+ year olds supported the Democrats, however, 18-29 year olds only made up 12% of the sample, whereas 65+ year olds made up 30% of the sample. It was also important to get the voter's gender, `gender`, and race, `race`, because it is important to understand the biological differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was discovered that 84% and 71% of Black and Asian respondents, respectively, supported the Democrats, whereas only 41% of White respondents supported the Democrats. Incorporating the voter's religion, `religion`, was important because it is important to understand that religious beliefs and differences can have a strong influence on a person's personal beliefs and therefore impact their personal stances on topics such as gun ownership. To put a contrasting example out there, 30% of Protestant/Christian respondents support the Democrats as opposed to a whopping 72% by Atheists. This could be attributed to certain parties aligning more to certain religious beliefs. A voter's education, `education`, was important because there may be certain understandings they arrive at during the completion of their education. Perhaps they viewed the world in one way at first, but after becoming more 'educated' in a topic, feel they have a better understanding of the world and therefore have a different stance on certain topics. This goes hand in hand with the voter's stance on student loans, `student_loan`, as it is important to understand how a voter's personal experiences with student loans may influence their voting decision. There was a time of serious consideration during Biden's tenure where he was considering forgiving student loans, and this intent alone may have swayed some support in his favour.
+
 
 
 
 ```{r}
-#| include: false
-#| warning: false
-#| message: false
 #| echo: false
+#| message: false
+#| warning: false
+#| label: tbl-
+#| tbl-cap: Sample of Subway Delay Statistics
 
-# Load in data
-ces2022_1 <- read_csv("data/cleaned_ces2022_1.csv")
-ces2022_2 <- read_csv("data/cleaned_ces2022_2.csv")
+ces2022_1 |>
+  filter(gender != "Other", race %in%  c("Asian", "Black", "Hispanic")) |>
+  ggplot(aes(x = religion, fill = voted_for)) +
+  stat_count(position = "dodge") +
+  facet_wrap(facets = vars(race)) +
+  theme_minimal() +
+  labs(
+    x = "Race",
+    y = "Number of respondents",
+    fill = "Voted for"
+  ) +
+  coord_flip() +
+  scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
+  theme(legend.position = "bottom")
 ```
-
 
 ```{r}
 ces2022_1 |>
-  ggplot(aes(x = education, fill = voted_for)) +
+  filter(race %in%  c("Asian", "Black", "Hispanic")) |>
+  ggplot(aes(x = religion, fill = voted_for)) +
   stat_count(position = "dodge") +
-  facet_wrap(facets = vars(gender)) +
+  facet_wrap(facets = vars(race)) +
   theme_minimal() +
   labs(
-    x = "Highest education",
+    x = "Race",
+    y = "Number of respondents",
+    fill = "Voted for"
+  ) +
+  coord_flip() +
+  scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
+  theme(legend.position = "bottom")
+
+ces2022_1 |>
+  filter(!(race %in%  c("Asian", "Black", "Hispanic"))) |>
+  ggplot(aes(x = religion, fill = voted_for)) +
+  stat_count(position = "dodge") +
+  facet_wrap(facets = vars(race)) +
+  theme_minimal() +
+  labs(
+    x = "Race",
     y = "Number of respondents",
     fill = "Voted for"
   ) +
@@ -130,16 +180,9 @@ We expect that due to various differences in experiences due to this background,
 
 The second model only forecasts who the respondent was likely to vote for based on race, to extract how much of the intercept in the previous model can be explained by a different in race.
 
-Finally, the last model aims to forecast a respondents vote knowing their prominent political ideals including education, gun ownership status, and student loan status. These are common political standpoints in the U.S.. Gun policy and student loan forgiveness is often a key political issue that separates the candidates. For the 2020 election, the candidates we are predicting for, Joe Biden and Donald Trump had opposing positions on student loan forgiveness. Whilst Trump was opposed to student loan forgiveness, backing incone-based repayment plans instead ()[@citetrumploanstance], Biden proposed to forgive a large amount of undergraduate tuition-related student debt ()[@citeballotpedia]. They also opposed each other on gun laws, with Trump advocating for the right to bear arms and Biden advocating gun safety policies aimed at holding manufacturers accountable ()[@citeballotpedia]. 
+Finally, the last model aims to forecast a respondents vote knowing their prominent political ideals including education, gun ownership status, and student loan status. These are common political standpoints in the U.S.. Gun policy and student loan forgiveness is often a key political issue that separates the candidates. For the 2020 election, the candidates we are predicting for, Joe Biden and Donald Trump had opposing positions on student loan forgiveness. Whilst Trump proposed grants that would help with future students, Biden proposed to forgive a large amount of undergraduate tuition-related student debt [@citeballotpedia]. In similar opposition, they held different opinions on gun laws, with Trump advocating for the right to bear arms and Biden advocating gun safety policies aimed at holding manufacturers accountable [@citeballotpedia]. 
 
 As such, we expect that there would be a strong correlation with the respondents gun ownership and student loan status to the candidate they supported in the 2020 election.
-
-TODO add to refs
-
-https://www.washingtonpost.com/politics/interactive/2023/presidential-candidates-2024-policies-issues/donald-trump-student-loans-education/
-
-https://ballotpedia.org/2020_presidential_candidates_on_student_loan_debt
-https://www.rand.org/research/gun-policy/key-findings/gun-policy-in-america.html
 
 
 
@@ -150,21 +193,61 @@ https://www.rand.org/research/gun-policy/key-findings/gun-policy-in-america.html
 #| warning: false
 #| echo: false
 
+# Rename coefficients
+cm <- c('genderMale' = 'Male',
+        'genderOther' = 'Other Gender',
+        'raceOther' = 'Other Race',
+        'raceWhite' = 'White',
+        'raceNative American' = 'Native American', 
+        'raceMultiracial' = 'Multiracial',
+        'raceMiddle Eastern' = 'Middle Eastern',
+        'raceHispanic' = 'Hispanic',
+        'raceBlack' = 'Black',
+        'raceAsian' = 'Asian',
+        'religionNone' = 'Non-Religious',
+        'religionProtestant' = 'Protestant',
+        'religionAgnostic' = 'Agnostic',
+        'religionAtheist' = 'Atheist',
+        'religionRoman Catholic' = 'Roman Catholic',
+        'religionJewish' = 'Jewish',
+        'religionOther' = 'Other',
+        'age_group30-44' = 'Age (30-44)',
+        'age_group45-65' = 'Age (45-65)',
+        'age_group65+' = 'Age (65+)'
+        )
+
 modelsummary(
   list(
     "Support Biden" = political_preferences_cultural
   ),
-  statistic = "mad"
+  statistic = "mad",
+  coef_rename = cm
   )
 
 ```
 
 ```{r}
+#| label: tbl-modelsummaryimportances
+#| tbl-cap: "Explaining whether a voter supported Biden or Trump in 2020 given their education, household gun ownership, and student load status."
+#| message: false
+#| warning: false
+#| echo: false
+
+cmi <- c('education4-year' = '4 year Education',
+         'educationHigh school graduate' = 'High School',
+         'educationNo HS' = 'No High School',
+         'educationPost-grad' = 'Post Graduate',
+         'educationSome college' = 'Some College',
+         'household_gun_ownershipYes' = 'Household Owns Guns',
+         'student_loan_statusYes' = 'Has Student Loans'
+         )
+
 modelsummary(
   list(
     "Support Biden" = political_preferences_importances
   ),
-  statistic = "mad"
+  statistic = "mad",
+  coef_rename = cmi
   )
 
 ```
