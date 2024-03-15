@@ -155,7 +155,8 @@ cleaned_ces2022_2 <-
       gunown == 1 ~ "Yes",
       gunown == 2 ~ "Yes",
       gunown == 3 ~ "No",
-      gunown == 4 ~ "Unsure"
+      gunown == 4 ~ "Unsure",
+      .default = "Unsure"
     ),
     student_loan_status = if_else(
       edloan == 1,
