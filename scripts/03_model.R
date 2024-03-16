@@ -26,6 +26,7 @@ ces2022_1_reduced <-
   ces2022_1 |>
   slice_sample(n = 1000) |>
   mutate(
+    # Ensure that Biden is being selected as 1, and Trump is 0
     voted_for = if_else(voted_for == "Biden", 1, 0)
     # voted_for = as_factor(voted_for)
   )
@@ -34,6 +35,7 @@ ces2022_2_reduced <-
   ces2022_2 |>
   slice_sample(n = 1000) |>
   mutate(
+    # Ensure that Biden is being selected as 1, and Trump is 0
     voted_for = if_else(voted_for == "Biden", 1, 0)
     # voted_for = as_factor(voted_for)
   )
@@ -55,7 +57,7 @@ saveRDS(
   file = "output/models/political_preferences_cultural.rds"
 )
 
-# Model with only race
+# Model with only race, used to verify race's effect on the intercept.
 political_preferences_race <-
   stan_glm(
     voted_for ~ race,
