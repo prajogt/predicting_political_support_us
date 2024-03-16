@@ -92,25 +92,45 @@ ces2022_2 |>
 
 
 
-The variables we used in our analysis were: 
-- `presvote20post`, renamed to `voted_for`
-  - This data was represented in the form of a numerical variable corresponding to the presidential candidate that voted for in the 2020 eleciton. This was cleaned to limit the options to either "Biden" or "Trump", the two leading candidates in the 2020 and 2024 election. 
-- `birthyr`, which was used to calculate the age of the voter, and later grouped into age buckets and renamed to `age`.
-  - This data was represented in the form of a numerical variable corresponding to the year the voter was born. This was cleaned to calculate the age of the voter, and then grouped into the age buckets: "18-29", "30-44", "45-64", "65+".
-- `gender4`, renamed to `gender`,
-  - This data was represented in the form of a numerical variable corresponding to the gender of the voter. This was cleaned to limit the options to "Man", "Woman", and "Other".
-- `educ`, renamed to education,
-  - This data was reprented in the form of a numerical variable corresponding to the highest level of education the voter has completed. This was cleaned to limit the options to "No HS" "High School graduate", "Some College", "2-year", "4-year", "Post-grad".
-- `race`, 
-  - This data was represented in the form of a numerical variable corresponding to the ethnicity of the voter. This was cleaned to limit the options to "White", "Black", "Hispanic", "Asian", "Middle Eastern", "Native American", "Multiracial", and "Other".
-- `religpew`, renamed to `religion`, 
-  - This data was represented in the form of a numerical variable corresponding to the religion of the voter. This was cleaned to limit the options to "Protestant", "Roman Catholic", "Jewish", "Atheist", "Agnostic", "Non-Religious", and "Other". There were various other religions that were not included in the dataset, but represented a small portion of the sample, and were thus grouped into "Other".
-- `gun_own`, renamed to `gun_ownership`,
-  - This data was represented in the form of a numerical variable corresponding to whether the voter or anyone in their household owned a gun. This was cleaned to limit the options to "Yes", "No", and "Unsure".
-- `edloan`, renamed to `student_loan`,
-  - This data was represented in the form of a numerical variable corresponding to whether the voter had student loans. This was cleaned to limit the options to "Yes", "No".
+The variables we used in our analysis were: - `presvote20post`, renamed to `voted_for` - This data was represented in the form of a numerical variable corresponding to the presidential candidate that voted for in the 2020 eleciton. This was cleaned to limit the options to either "Biden" or "Trump", the two leading candidates in the 2020 and 2024 election.
 
-  The reason that we chose a large amount of variables/factors for our paper is so that we can get a bigger representation of the political climate. Should this be limited to a single model, then it may not reflect other correlations that may be present in the data. By using these variables, we take the most significant factors that may influence a voter's decision, and use them to predict who a voter supported in the 2020 election `voted_for`. It was important to get the voter's age, `age`, because it is important to understand the generational differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was clear that 'Female' respondents were in more support towards the Democrats at 52% as opposed to 43% for 'Males'. In our given age buckets, it was discovered that 65% of 18-29 year olds supported the Democrats, whereas only 40% of 65+ year olds supported the Democrats, however, 18-29 year olds only made up 12% of the sample, whereas 65+ year olds made up 30% of the sample. It was also important to get the voter's gender, `gender`, and race, `race`, because it is important to understand the biological differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was discovered that 84% and 71% of Black and Asian respondents, respectively, supported the Democrats, whereas only 41% of White respondents supported the Democrats. Incorporating the voter's religion, `religion`, was important because it is important to understand that religious beliefs and differences can have a strong influence on a person's personal beliefs and therefore impact their personal stances on topics such as gun ownership. To put a contrasting example out there, 30% of Protestant/Christian respondents support the Democrats as opposed to a whopping 72% by Atheists. This could be attributed to certain parties aligning more to certain religious beliefs. A voter's education, `education`, was important because there may be certain understandings they arrive at during the completion of their education. Perhaps they viewed the world in one way at first, but after becoming more 'educated' in a topic, feel they have a better understanding of the world and therefore have a different stance on certain topics. This goes hand in hand with the voter's stance on student loans, `student_loan`, as it is important to understand how a voter's personal experiences with student loans may influence their voting decision. There was a time of serious consideration during Biden's tenure where he was considering forgiving student loans, and this intent alone may have swayed some support in his favour.
+-   `birthyr`, which was used to calculate the age of the voter, and later grouped into age buckets and renamed to `age`.
+
+    -   This data was represented in the form of a numerical variable corresponding to the year the voter was born. This was cleaned to calculate the age of the voter, and then grouped into the age buckets: "18-29", "30-44", "45-64", "65+".
+
+-   `gender4`, renamed to `gender`,
+
+    -   This data was represented in the form of a numerical variable corresponding to the gender of the voter. This was cleaned to limit the options to "Man", "Woman", and "Other".
+
+-   `educ`, renamed to education,
+
+    -   This data was reprented in the form of a numerical variable corresponding to the highest level of education the voter has completed. This was cleaned to limit the options to "No HS" "High School graduate", "Some College", "2-year", "4-year", "Post-grad".
+
+-   `race`,
+
+    -   This data was represented in the form of a numerical variable corresponding to the ethnicity of the voter. This was cleaned to limit the options to "White", "Black", "Hispanic", "Asian", "Middle Eastern", "Native American", "Multiracial", and "Other".
+
+-   `religpew`, renamed to `religion`,
+
+    -   This data was represented in the form of a numerical variable corresponding to the religion of the voter. This was cleaned to limit the options to "Protestant", "Roman Catholic", "Jewish", "Atheist", "Agnostic", "Non-Religious", and "Other". There were various other religions that were not included in the dataset, but represented a small portion of the sample, and were thus grouped into "Other".
+
+-   `gun_own`, renamed to `gun_ownership`,
+
+    -   This data was represented in the form of a numerical variable corresponding to whether the voter or anyone in their household owned a gun. This was cleaned to limit the options to "Yes", "No", and "Unsure".
+
+-   `edloan`, renamed to `student_loan`,
+
+    -   This data was represented in the form of a numerical variable corresponding to whether the voter had student loans. This was cleaned to limit the options to "Yes", "No".
+
+    The reason that we chose a large amount of variables/factors for our paper is so that we can get a bigger representation of the political climate. Should this be limited to a single model, then it may not reflect other correlations that may be present in the data. By using these variables, we take the most significant factors that may influence a voter's decision, and use them to predict who a voter supported in the 2020 election `voted_for`.
+
+    It was important to get the voter's `age`, in order to understand the generational differences and how their experiences and personal interests may influence their voting decision. In our given age buckets, it was discovered that 65% of 18-29 year olds supported the Democrats, whereas only 40% of 65+ year olds supported the Democrats, however, 18-29 year olds only made up 12% of the sample, whereas 65+ year olds made up 30% of the sample.
+
+    It was also necessary to get the voter's `gender`, and `race`, because it is important to understand the biological differences and how their experiences and personal interests may influence their voting decision. In our dataset, it was clear that 'Female' respondents were more supportive towards the Democrats at 52% as opposed to 43% for 'Males'. In the racial side of the respondent data, it was discovered that 84% and 71% of Black and Asian respondents, respectively, supported the Democrats, whereas only 41% of White respondents supported the Democrats.
+
+    Incorporating the voter's `religion`, was a needed factor since it is important to understand that religious beliefs and differences can have a strong influence one's personal beliefs and therefore impact their personal stances on topics such as gun ownership. To put a contrasting example out there, 30% of Protestant/Christian respondents support the Democrats as opposed to a whopping 72% by Atheists. This could be attributed to certain parties aligning more to certain religious beliefs.
+
+    A voter's `education`, was important because there may be certain understandings they arrive at during the completion of their education. Perhaps they viewed the world in one way at first, but after becoming more 'educated' in a topic, they feel that they have a better understanding of the world and either become more confident in their initial understanding or change their stance entirely. This goes hand in hand with the voter's stance on student loans, `student_loan`, as it is important to understand how a voter's personal experiences with student loans may influence their voting decision. There was a time of serious consideration during Biden's tenure where he was considering forgiving student loans, and this intent alone may have swayed some support in his favour.
 
 
 
