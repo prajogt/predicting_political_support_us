@@ -58,20 +58,38 @@ The data was retrieved from Harvard's CCES Dataverse database, using the `datave
 #| warning: false
 #| message: false
 #| echo: false
-#| label: tbl-cesdata
-#| tbl-cap: "2022 CES (Cooperative Election Study) Data"
+#| label: tbl-cesdata1
+#| tbl-cap: "2022 CES (Cooperative Election Study) Data (Cultural)"
 
 # Load in data
 ces2022_1 <- read_csv("data/cleaned_ces2022_1.csv")
 ces2022_2 <- read_csv("data/cleaned_ces2022_2.csv")
 
-ces2022_2 |>
+ces2022_1 |>
   head() |>
   kable(
-    col.names = c("Voted For (2020)", "Age Group", "Gender", "Education", "Race", "Religion", "Household Gun Ownership", "Student Loan Status"),
+    col.names = c("Voted For (2020)", "Age Group", "Gender", "Education", "Race", "Religion"),
     booktabs = TRUE
   )
 ```
+
+```{r}
+#| warning: false
+#| message: false
+#| echo: false
+#| label: tbl-cesdata2
+#| tbl-cap: "2022 CES (Cooperative Election Study) Data (Cultural) Standings"
+
+ces2022_2 |>
+  select(voted_for, household_gun_ownership, student_loan_status) |>
+  head() |>
+  kable(
+    col.names = c("Voted For (2020)", "Household Gun Ownership", "Student Loan Status"),
+    booktabs = TRUE
+  )
+
+```
+
 
 
 The variables we used in our analysis were: 
@@ -263,7 +281,7 @@ only 5 and 1 voters identified in those categories respectively. To get a more
 accurate reading in regards to these features, it would be necessary to train
 a model which includes much more of these demographics.
 
-# Appendix
+# Appendix {-}
 
 ```{r}
 #| warning: false
