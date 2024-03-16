@@ -42,7 +42,9 @@ library(rstanarm)
 
 # Data
 
-These delay statistics were downloaded, cleaned, parsed, analyzed, and visualized using R [@citeR], a statistical programming language, with package support from `tidyverse` [@citetidyverse], a collection of libraries which included the following packages that were utilized: 
+The data was retrieved from Harvard's CCES Dataverse database, using the `dataverse` [@citedataverse] package. In this report we consider data collected from the 2022 CES (Cooperative Election Study) survey, a questionnaire administered by YouGov collecting information about respondent's demographic, background, beliefs, opinions, past ballots cast, and future vote intentions. This data is accessible through Dataverse as *Cooperative Election Study Common Content* [@citecesdata]. There was an option to use the 2020 CES dataset, but we opted to use the newer, 60000 observation, 2022 CES dataset for a more updated and accurate representation of the current political climate in the United States after two years of Joe Biden being in office. When the 2024 elections are held, we can see how the original previous aligning of the respondents have changed, if they have changed.
+
+This data was downloaded, cleaned, parsed, analyzed, and visualized using R [@citeR], a statistical programming language, with package support from `tidyverse` [@citetidyverse], a collection of libraries which included the following packages that were utilized: 
 
 * `ggplot2` [@citeggplot] 
 * `dplyr` [@citedplyr] 
@@ -50,8 +52,6 @@ These delay statistics were downloaded, cleaned, parsed, analyzed, and visualize
 * `tibble` [@citetibble]
 
 For additional assitance with report generation the `knitr` [@citeknitr] package was used.
-
-The data was retrieved from Harvard's CCES Dataverse database, using the `dataverse` [@citedataverse] package. In this report we consider data collected from the 2022 CES (Cooperative Election Study) survey, a questionnaire administered by YouGov collecting information about respondent's demographic, background, beliefs, opinions, past ballots cast, and future vote intentions. This data is accessible through Dataverse as *Cooperative Election Study Common Content* [@citecesdata]. There was an option to use the 2020 CES dataset, but we opted to use the newer, 60000 observation, 2022 CES dataset for a more updated and accurate representation of the current political climate in the United States after two years of Joe Biden being in office. When the 2024 elections are held, we can see how the original previous aligning of the respondents have changed, if they have changed.
 
 
 ```{r}
@@ -140,16 +140,34 @@ The variables we used in our analysis were: - `presvote20post`, renamed to `vote
 #| echo: false
 #| message: false
 #| warning: false
-#| fig-cap: "Votes for Candidate given Age Group and Religion"
+#| fig-cap: "Votes for Candidate given Age Group and Gender"
+#| fig-subcap: ["Male and Female", "Other (Non-binary and Other)"]
 #| label: fig-agevsreligion
+#| layout-ncol: 2
 
 ces2022_1 |>
-  ggplot(aes(x = religion, fill = voted_for)) +
+  filter(gender != "Other") |>
+  ggplot(aes(x = age_group, fill = voted_for)) +
   stat_count(position = "dodge") +
-  facet_wrap(facets = vars(age_group)) +
+  facet_wrap(facets = vars(gender)) +
   theme_minimal() +
   labs(
-    x = "Religion",
+    x = "Age Group",
+    y = "Number of respondents",
+    fill = "Voted for"
+  ) +
+  coord_flip() +
+  scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
+  theme(legend.position = "bottom")
+
+ces2022_1 |>
+  filter(gender == "Other") |>
+  ggplot(aes(x = age_group, fill = voted_for)) +
+  stat_count(position = "dodge") +
+  facet_wrap(facets = vars(gender)) +
+  theme_minimal() +
+  labs(
+    x = "Age Group",
     y = "Number of respondents",
     fill = "Voted for"
   ) +
@@ -176,14 +194,91 @@ ces2022_2 |>
   facet_wrap(facets = vars(education)) +
   theme_minimal() +
   labs(
-    x = "Does someone in your household own a gun?",
+    x = "Household Gun Ownership",
     y = "Number of respondents",
     fill = "Voted for"
   ) +
   coord_flip() +
   scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom", axis.text.x=element_text(angle=60, hjust=1))
 
+```
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Votes for Candidate given Student Loan Status and Education"
+#| label: fig-loanvseducation
+
+ces2022_2 |>
+  ggplot(aes(x = education, fill = voted_for)) +
+  stat_count(position = "dodge") +
+  facet_wrap(facets = vars(student_loan_status)) +
+  theme_minimal() +
+  labs(
+    x = "Education",
+    y = "Number of respondents",
+    fill = "Voted for"
+  ) +
+  coord_flip() +
+  scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
+  theme(legend.position = "bottom", axis.text.x=element_text(angle=60, hjust=1))
+
+
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Votes for Candidate given Race and Religion"
+#| label: fig-racevsreligion1
+
+
+ces2022_2 |>
+  filter(race %in% c("Black", "Hispanic", "White")) |>
+  ggplot(aes(x = religion, fill = voted_for)) +
+  stat_count(position = "dodge") +
+  facet_wrap(facets = vars(race)) +
+  theme_minimal() +
+  labs(
+    x = "Religion",
+    y = "Number of respondents",
+    fill = "Voted for"
+  ) +
+  coord_flip() +
+  scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
+  theme(legend.position = "bottom", axis.text.x=element_text(angle=60, hjust=1))
+
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Votes for Candidate given Race and Religion"
+#| label: fig-racevsreligion2
+
+
+ces2022_2 |>
+  filter(!(race %in% c("Black", "Hispanic", "White"))) |>
+  ggplot(aes(x = religion, fill = voted_for)) +
+  stat_count(position = "dodge") +
+  facet_wrap(facets = vars(race)) +
+  theme_minimal() +
+  labs(
+    x = "Religion",
+    y = "Number of respondents",
+    fill = "Voted for"
+  ) +
+  coord_flip() +
+  scale_fill_manual(values = c("Biden" = "blue", "Trump" = "red")) +
+  theme(legend.position = "bottom", axis.text.x=element_text(angle=60, hjust=1))
 
 ```
 
