@@ -309,10 +309,22 @@ The first model that was created was intended to discover whether we can forecas
 
 We expect that due to various differences in experiences due to this background, whether it be because of a generational difference, a difference in culture between countries, or a difference in beliefs in religions, a voter who identifies in those demographics would vote differently, voting for the candidate who most understands their experiences.
 
-The second model aims to forecast a respondents vote knowing their prominent political ideals including education, gun ownership status, and student loan status. These are common political standpoints in the U.S.. Gun policy and student loan forgiveness is often a key political issue that separates the candidates. For the 2020 election, the candidates we are predicting for, Joe Biden and Donald Trump had opposing positions on student loan forgiveness. Whilst Trump proposed grants that would help with future students, Biden proposed to forgive a large amount of undergraduate tuition-related student debt [@citeballotpedia]. In similar opposition, they held different opinions on gun laws, with Trump advocating for the right to bear arms and Biden advocating gun safety policies aimed at holding manufacturers accountable [@citeballotpedia]. 
+Therefore the model we are interested in is:
 
-As such, we expect that there would be a strong correlation with the respondents gun ownership and student loan status to the candidate they supported in the 2020 election.
+$$
+\begin{aligned}
+y_i|\pi_i & \sim \mbox{Bern}(\pi_i) \\
+\mbox{logit}(\pi_i) & = \beta_0 +\beta_1 \times \mbox{age_group}_i + \beta_2 \times \mbox{gender}_i +\beta_3 \times \mbox{race}_i + \beta_4 \times \mbox{religion}_i \\
+\beta_0 & \sim \mbox{Normal}(0, 2.5)\\
+\beta_1 & \sim \mbox{Normal}(0, 2.5)\\
+\beta_2 & \sim \mbox{Normal}(0, 2.5)\\
+\beta_3 & \sim \mbox{Normal}(0, 2.5)\\
+\beta_4 & \sim \mbox{Normal}(0, 2.5)
+\end{aligned}
+$$
+Where $y_i$ is whether they voted for Biden or not in the 2020 election, $\mbox{age_group}_i$ is the age group the respondent falls in, $\mbox{gender}_i$ is the gender of the respondent, $\mbox{race}_i$ is the race of the respondent, and $\mbox{religion}_i$ is the relgion of the respondent.
 
+@tbl-modelsummarycultural shows a model summary for this model, this will be dicussed further in the [results](#results) section.
 
 
 ```{r}
@@ -355,6 +367,25 @@ modelsummary(
 
 ```
 
+The second model aims to forecast a respondents vote knowing their prominent political ideals including education, gun ownership status, and student loan status. These are common political standpoints in the U.S.. Gun policy and student loan forgiveness is often a key political issue that separates the candidates. For the 2020 election, the candidates we are predicting for, Joe Biden and Donald Trump had opposing positions on student loan forgiveness. Whilst Trump proposed grants that would help with future students, Biden proposed to forgive a large amount of undergraduate tuition-related student debt [@citeballotpedia]. In similar opposition, they held different opinions on gun laws, with Trump advocating for the right to bear arms and Biden advocating gun safety policies aimed at holding manufacturers accountable [@citeballotpedia]. 
+
+As such, we expect that there would be a strong correlation with the respondents gun ownership and student loan status to the candidate they supported in the 2020 election.
+
+$$
+\begin{aligned}
+y_i|\pi_i & \sim \mbox{Bern}(\pi_i) \\
+\mbox{logit}(\pi_i) & = \beta_0 +\beta_1 \times \mbox{education}_i + \beta_2 \times \mbox{student_loan_status}_i +\beta_3 \times \mbox{household_gun_ownership}_i \\
+\beta_0 & \sim \mbox{Normal}(0, 2.5)\\
+\beta_1 & \sim \mbox{Normal}(0, 2.5)\\
+\beta_2 & \sim \mbox{Normal}(0, 2.5)\\
+\beta_3 & \sim \mbox{Normal}(0, 2.5)
+\end{aligned}
+$$
+
+where $y_i$ is whether they voted for Biden or not in the 2020 election, $\mbox{education}_i$ is the highest education the respondent completed, $\mbox{student_loan_status}_i$ is if the respondent has student loans, and $\mbox{household_gun_ownership}_i$ is if the respondent or someone within their household owns a gun.
+
+@tbl-modelsummaryimportances shows a model summary for this model, this will be dicussed further in the [results](#results) section.
+
 
 ```{r}
 #| message: false
@@ -384,7 +415,10 @@ modelsummary(
 
 
 
-# Results
+# Results {#results}
+
+
+
 
 # Discussion
 
