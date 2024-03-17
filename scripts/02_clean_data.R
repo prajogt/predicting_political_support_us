@@ -9,6 +9,7 @@
 #### Workplace setup ####
 
 library(tidyverse)
+library(arrow)
 
 #### Clean CES Data ####
 
@@ -134,6 +135,7 @@ cleaned_ces2022_1 <-
   select(voted_for, age_group, gender, education, race, religion)
 
 write_csv(cleaned_ces2022_1, "output/data/cleaned_ces2022_1.csv")
+write_parquet(cleaned_ces2022_1, "output/data/cleaned_ces2022_1.parquet")
 
 # Gun ownership and education loan status have around 10,000 missing values,
 # so we will first store the data with columns not including gunown and edloan, 
@@ -167,5 +169,6 @@ cleaned_ces2022_2 <-
   select(-gunown, -edloan)
 
 write_csv(cleaned_ces2022_2, "output/data/cleaned_ces2022_2.csv")
+write_parquet(cleaned_ces2022_2, "output/data/cleaned_ces2022_2.parquet")
   
-  
+
