@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Simulates data for predicting US political support based on demographic and socio-economic factors
 # Author: Janssen Myer Rambaud & Timothius Prajogi
-# Data: March 11 2024
+# Data: March 16 2024
 # Contact: janssen.rambaud@mail.utoronto.ca, timothius.prajogi@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: None

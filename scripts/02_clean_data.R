@@ -1,7 +1,7 @@
 #### Preamble ####
-# Purpose: Download US CES
+# Purpose: Clean the raw CES data
 # Author: Timothius Prajogi, Janssen Myer Rambaud
-# Date: 23 January 2024
+# Date: 16 March 2024
 # Contact: tim.prajogi@mail.utoronto.ca
 # License: MIT
 # Prerequisites: 01_download_data
