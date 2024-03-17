@@ -2,7 +2,7 @@
 # Purpose: Clean the raw CES data
 # Author: Timothius Prajogi, Janssen Myer Rambaud
 # Date: 16 March 2024
-# Contact: tim.prajogi@mail.utoronto.ca
+# Contact: tim.prajogi@mail.utoronto.ca, janssen.rambaud@mail.utoronto.ca
 # License: MIT
 # Prerequisites: 01_download_data
 
